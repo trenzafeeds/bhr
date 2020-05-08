@@ -4,18 +4,44 @@ objects.py
 
 from header import *
 
+class multiset:
+
+    def __init__(self, base):
+        self.counts = Counter(base)
+
+    def __eq__(self, other):
+        if tuple(self.counts.items())==tuple(other.counts.items()):
+            return True
+        else: return False
+
+    def __hash__(self):
+        return hash(tuple(self.counts.items()))
+
+    def __str__(self):
+        return str(self.counts)
+
+    def __repr__(self):
+        return str(self.visual())
+
+    def visual(self):
+        return [ ( list(element), self.counts[element] )\
+                 for element in self.counts.keys() ] 
+
+    def elements(self):
+        return list(self.counts.elements())
+
 class BHRGroup:
 
     def __init__(self, n, ggen=gt.DIHEDRAL):
-        if ggen == gt.DIHEDRAL:
-            self.group = ggen(n)
-        else: app_error("Invalid group type.")
+        
+        self.group = ggen(n)
 
         self.order = self.group.order()
         self.elements = self.group.list()
         self.i = self.group.identity()
         
         self.bgroup = self.gen_bar_group()
+        self.bset = self.gen_bar_set()
 
     def gen_bar_group(self):
         bar_group = {}
@@ -23,6 +49,9 @@ class BHRGroup:
             if item != self.group.identity():
                 bar_group[item] = frozenset([item, item.inverse()])
         return bar_group
+
+    def gen_bar_set(self):
+        return frozenset(self.bgroup.values())
 
 class BHRGraph:
     
@@ -71,3 +100,4 @@ class BHRGraph:
                     self.record_edge(\
                     vertex, dest, self.edge(vinverse * dest))
         return edge_dict
+
