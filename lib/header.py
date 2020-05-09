@@ -17,8 +17,8 @@ SILENT = False
 
 class gt(Enum):
     DIHEDRAL = DihedralGroup
-#                                             verbose, silent
-DEFAULT_ARGS = [3, 6, gt.DIHEDRAL, 'out.log', [False, False]]
+#                                        verbose, silent
+DEFAULT_ARGS = [3, 6, gt.DIHEDRAL, None, [False, False]]
 GROUP_TYPES = {'d': gt.DIHEDRAL,
                'dihedral': gt.DIHEDRAL}
 

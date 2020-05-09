@@ -4,6 +4,14 @@ utils.py
 
 from objects import *
 
+def fswitch(f, g, n):
+    letter = 'g'
+    if f != None:
+        f.close()
+    if g == gt.DIHEDRAL:
+        letter = 'd'
+    return open("log/{}{}.log".format(letter, n), "w+")
+
 def gen_paths(graph):
     return permutations(graph.vertices)
 
